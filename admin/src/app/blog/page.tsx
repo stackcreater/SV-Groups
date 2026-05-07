@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase-admin";
 import Link from "next/link";
+import DeleteButton from "@/components/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -32,14 +33,19 @@ export default async function AdminBlogPage() {
         {blogs.length === 0 ? (
           <div className="p-8 text-center text-gray-400">No blog posts found. Write one to get started!</div>
         ) : (
-          <div className="p-4 grid gap-4">
+           <div className="p-4 grid gap-4">
              {blogs.map((blog) => (
                 <div key={blog.id} className="p-4 border border-white/10 rounded flex justify-between items-center">
-                   <div className="font-bold">{blog.title}</div>
-                   <div className="text-sm text-gray-500">Edit / Delete</div>
+                   <div className="font-bold text-white">{blog.title}</div>
+                   <div className="flex items-center text-sm">
+                     <Link href={`/blog/${blog.id}/edit`} className="text-cyan-neon hover:text-cyan-300 transition-colors mr-4">
+                       Edit
+                     </Link>
+                     <DeleteButton id={blog.id} type="blogs" />
+                   </div>
                 </div>
              ))}
-          </div>
+           </div>
         )}
       </div>
     </div>
