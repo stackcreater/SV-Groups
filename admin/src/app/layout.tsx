@@ -6,8 +6,8 @@ import AdminLayout from "@/components/AdminLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Admin Panel | SV Groups",
-  description: "Admin panel for SV Groups portfolio",
+  title: "Admin Panel | Stack Creators",
+  description: "Admin panel for Stack Creators portfolio",
 };
 
 export default function RootLayout({
@@ -16,8 +16,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} min-h-screen text-slate-200 bg-black antialiased`}>
+    <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} min-h-screen text-foreground bg-background antialiased transition-colors duration-300`}>
         <AdminLayout>
           {children}
         </AdminLayout>

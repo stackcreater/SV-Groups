@@ -1,0 +1,55 @@
+@layer components {
+  .text-animation-stage {
+    container-type: inline-size;
+    display: grid;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    place-items: center;
+    grid-template-areas: "title";
+  }
+
+  .text-animation-title {
+    margin: 0;
+    grid-area: title;
+    pointer-events: none;
+    transform-style: preserve-3d;
+  }
+
+  .text-animation-unit {
+    display: inline-block;
+    white-space: pre;
+    backface-visibility: hidden;
+    transform-origin: 50% 55%;
+    will-change: transform, opacity, filter;
+  }
+
+  .text-animation-unit.line {
+    display: block;
+  }
+
+  .text-animation-kinetic-line {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .text-animation-kinetic-stack {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .text-animation-kinetic-word {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    white-space: nowrap;
+    backface-visibility: hidden;
+    will-change: transform, opacity, filter;
+  }
+
+  .text-animation-fallback {
+    opacity: 0.74;
+  }
+}

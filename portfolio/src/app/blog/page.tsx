@@ -26,20 +26,26 @@ export default async function BlogPage() {
   // Removed fallback placeholder posts
 
   return (
-    <div className="min-h-screen py-24 bg-black">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen py-24 bg-background transition-colors duration-300 overflow-hidden">
+      {/* Abstract Background */}
+      <div className="absolute inset-0 z-0 opacity-40 dark:opacity-80 pointer-events-none">
+        <div className="absolute top-10 left-1/4 w-96 h-96 bg-cyan-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Blog</h1>
-          <p className="text-xl text-gray-400">Thoughts, tutorials, and insights on web & mobile development.</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Blog</h1>
+          <p className="text-xl text-slate-600 dark:text-gray-400">Thoughts, tutorials, and insights on web & mobile development.</p>
         </div>
 
         <div className="space-y-10">
           {posts.map((post) => (
             <Link href={`/blog/${post.slug || post.id}`} key={post.id} className="block group">
-              <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden hover:bg-white/[0.04] transition-colors flex flex-col md:flex-row">
+              <div className="bg-card text-card-foreground border border-border rounded-2xl overflow-hidden hover:bg-slate-50 dark:hover:bg-white/[0.04] shadow-sm dark:shadow-none transition-colors flex flex-col md:flex-row">
                 
-                <div className="md:w-1/3 relative h-64 md:h-auto bg-white/5 flex items-center justify-center overflow-hidden">
+                <div className="md:w-1/3 relative h-64 md:h-auto bg-muted flex items-center justify-center overflow-hidden">
                   {post.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img 
@@ -53,14 +59,14 @@ export default async function BlogPage() {
                 </div>
                 
                 <div className="p-8 md:w-2/3 flex flex-col justify-center">
-                  <div className="flex items-center text-xs text-gray-500 mb-3 font-mono">
+                  <div className="flex items-center text-xs text-slate-500 dark:text-gray-500 mb-3 font-mono">
                     <Calendar className="w-4 h-4 mr-2" />
                     {post.createdAt}
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-neon transition-colors">{post.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{post.excerpt}</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-neon transition-colors">{post.title}</h3>
+                  <p className="text-slate-600 dark:text-gray-400 leading-relaxed">{post.excerpt}</p>
                   
-                  <div className="mt-6 text-sm font-semibold text-purple-neon group-hover:underline">
+                  <div className="mt-6 text-sm font-semibold text-purple-600 dark:text-purple-neon group-hover:underline">
                     Read More →
                   </div>
                 </div>

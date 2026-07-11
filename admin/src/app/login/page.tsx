@@ -38,14 +38,14 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4">
-      <div className="max-w-md w-full bg-white/[0.02] border border-white/10 rounded-2xl p-8 shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-background text-foreground transition-colors duration-300 px-4">
+      <div className="max-w-md w-full bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-2xl">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 border border-white/10">
-            <Lock className="w-8 h-8 text-cyan-neon" />
+          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4 border border-border">
+            <Lock className="w-8 h-8 text-cyan-600 dark:text-cyan-neon" />
           </div>
-          <h2 className="text-2xl font-bold text-white">Admin Dashboard</h2>
-          <p className="text-gray-400 text-sm mt-1">Sign in to manage your portfolio</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Admin Dashboard</h2>
+          <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">Sign in to manage your portfolio</p>
         </div>
 
         {error && (
@@ -56,25 +56,25 @@ export default function AdminLogin() {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Username</label>
+            <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Username</label>
             <input
               type="text"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-black/50 border border-white/20 rounded-md px-4 py-3 text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
+              className="w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
               placeholder="Enter username"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Password</label>
+            <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Password</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black/50 border border-white/20 rounded-md px-4 py-3 text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
+              className="w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -82,7 +82,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-gradient-to-r from-cyan-neon to-purple-neon hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-neon focus:ring-offset-black transition-all"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon hover:opacity-90 focus:outline-none transition-all cursor-pointer"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </button>

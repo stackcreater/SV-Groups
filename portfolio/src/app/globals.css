@@ -1,21 +1,52 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --muted: #f8fafc;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --ring-width-scale: 2.2vmin;
+  --ring-border-width: 0.8vmin;
+  --ring-color: rgba(0, 150, 255, 0.95);
+  --ring-shadow: rgba(0, 150, 255, 0.25);
+  --translate-y-value: -30vmin;
+}
+
+:root.dark {
   --background: #000000;
   --foreground: #e2e8f0;
+  --muted: #0a0a0a;
+  --muted-foreground: #94a3b8;
+  --card: #0a0a0a;
+  --card-foreground: #e2e8f0;
+  --border: #1e293b;
+  --ring-color: rgb(0, 240, 255);
+  --ring-shadow: rgba(0, 240, 255, 0.4);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
   --color-cyan-neon: #00f0ff;
   --color-purple-neon: #b000ff;
+  --animate-flip-words: flip-words 8s infinite;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Custom scrollbar */
@@ -23,12 +54,72 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--muted);
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #cbd5e1;
   border-radius: 4px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Mobile responsive adjustments for Preloader */
+@media (max-width: 768px) {
+  :root {
+    --ring-width-scale: 2.5vmin;
+    --ring-border-width: 0.9vmin;
+    --translate-y-value: -25vmin;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --ring-width-scale: 3.5vmin;
+    --ring-border-width: 1.1vmin;
+    --translate-y-value: -20vmin;
+  }
+}
+
+.transform-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.border-radial-ring {
+  background-color: transparent;
+  transform: rotateX(70deg) translateZ(50px);
+}
+
+.animate-my-move {
+  animation: my-move 3s ease-in-out infinite;
+}
+
+@keyframes my-move {
+  0%,
+  100% {
+    transform: rotateX(70deg) translateZ(50px) translateY(0px);
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    transform: rotateX(70deg) translateZ(50px) translateY(var(--translate-y-value));
+    filter: hue-rotate(180deg);
+  }
+}
+
+@keyframes flip-words {
+  10% { transform: translateY(-112%); }
+  25% { transform: translateY(-100%); }
+  35% { transform: translateY(-212%); }
+  50% { transform: translateY(-200%); }
+  60% { transform: translateY(-312%); }
+  75% { transform: translateY(-300%); }
+  85% { transform: translateY(-412%); }
+  100% { transform: translateY(-400%); }
 }

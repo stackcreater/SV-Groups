@@ -62,16 +62,22 @@ export default function StartProjectPage() {
   };
 
   const formSectionClasses = "space-y-6";
-  const labelClasses = "block text-sm font-medium text-gray-300 mb-1";
-  const inputClasses = "w-full bg-black/50 border border-white/20 rounded-md px-4 py-3 text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
+  const labelClasses = "block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1";
+  const inputClasses = "w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
 
   return (
-    <div className="min-h-screen py-24 bg-black">
-      <div className="max-w-3xl mx-auto px-4">
+    <div className="relative min-h-screen py-24 bg-background transition-colors duration-300 overflow-hidden">
+      {/* Abstract Background */}
+      <div className="absolute inset-0 z-0 opacity-40 dark:opacity-80 pointer-events-none">
+        <div className="absolute top-10 left-1/4 w-96 h-96 bg-cyan-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-3xl mx-auto px-4">
         
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">Start a Project</h1>
-          <p className="text-gray-400">Tell me about your idea. I'll review it and get back to you within 24 hours.</p>
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Start a Project</h1>
+          <p className="text-slate-600 dark:text-gray-400">Tell me about your idea. I'll review it and get back to you within 24 hours.</p>
         </div>
 
         {isSuccess ? (
@@ -86,11 +92,11 @@ export default function StartProjectPage() {
             </p>
           </motion.div>
         ) : (
-          <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+          <div className="bg-card text-card-foreground border border-border rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden transition-colors duration-300">
             {/* Progress Bar */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-800">
+            <div className="absolute top-0 left-0 w-full h-1 bg-slate-200 dark:bg-gray-800">
               <motion.div 
-                className="h-full bg-gradient-to-r from-cyan-neon to-purple-neon"
+                className="h-full bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon"
                 initial={{ width: `${(step - 1) * 20}%` }}
                 animate={{ width: `${(step / 6) * 100}%` }}
                 transition={{ duration: 0.3 }}
@@ -103,7 +109,7 @@ export default function StartProjectPage() {
                 {/* Step 1: About You */}
                 {step === 1 && (
                   <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">1. About You</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">1. About You</h2>
                     
                     <div>
                       <label className={labelClasses}>Full Name *</label>
@@ -133,7 +139,7 @@ export default function StartProjectPage() {
                 {/* Step 2: Project Type */}
                 {step === 2 && (
                   <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">2. Project Type</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">2. Project Type</h2>
                     
                     <div>
                       <label className={labelClasses}>What do you want to build?</label>
@@ -153,7 +159,7 @@ export default function StartProjectPage() {
                 {/* Step 3: Problem Statement */}
                 {step === 3 && (
                   <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">3. Problem Statement</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">3. Problem Statement</h2>
                     
                     <div>
                       <label className={labelClasses}>Describe the problem your project solves *</label>
@@ -175,14 +181,14 @@ export default function StartProjectPage() {
                 {/* Step 4: Tech Preferences */}
                 {step === 4 && (
                   <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">4. Tech Preferences</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">4. Tech Preferences</h2>
                     
                     <div>
                       <label className={labelClasses}>Preferred Tech Stack</label>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {["React / Next.js", "Vue.js", "Node.js / Express", "Python", "Flutter", "No preference"].map(tech => (
-                          <label key={tech} className="flex items-center space-x-2 text-gray-300">
-                            <input type="checkbox" value={tech} {...register("techStack")} className="rounded bg-black border-white/20 text-cyan-neon focus:ring-cyan-neon" />
+                          <label key={tech} className="flex items-center space-x-2 text-slate-600 dark:text-gray-300">
+                            <input type="checkbox" value={tech} {...register("techStack")} className="rounded bg-white dark:bg-black border-slate-200 dark:border-white/20 text-cyan-neon focus:ring-cyan-neon" />
                             <span>{tech}</span>
                           </label>
                         ))}
@@ -230,7 +236,7 @@ export default function StartProjectPage() {
                 {/* Step 5: Timeline & Budget */}
                 {step === 5 && (
                   <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">5. Timeline & Budget</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">5. Timeline & Budget</h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -260,7 +266,7 @@ export default function StartProjectPage() {
                 {/* Step 6: Additional Info */}
                 {step === 6 && (
                   <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
-                    <h2 className="text-2xl font-semibold text-white mb-6">6. Additional Info</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">6. Additional Info</h2>
                     
                     <div>
                       <label className={labelClasses}>Any specific features or integrations needed?</label>
@@ -282,13 +288,13 @@ export default function StartProjectPage() {
               </AnimatePresence>
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
+              <div className="flex justify-between items-center mt-10 pt-6 border-t border-border">
                 <button
                   type="button"
                   onClick={prevStep}
                   disabled={step === 1}
                   className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                    step === 1 ? "text-gray-600 cursor-not-allowed" : "text-white hover:bg-white/10"
+                    step === 1 ? "text-slate-400 dark:text-gray-600 cursor-not-allowed" : "text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
                   }`}
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" /> Back
@@ -298,7 +304,7 @@ export default function StartProjectPage() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="flex items-center px-6 py-2 bg-white text-black text-sm font-bold rounded-md hover:bg-gray-200 transition-colors"
+                    className="flex items-center px-6 py-2 bg-slate-900 text-white dark:bg-white dark:text-black text-sm font-bold rounded-md hover:bg-slate-800 dark:hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Next <ArrowRight className="w-4 h-4 ml-2" />
                   </button>
@@ -306,7 +312,7 @@ export default function StartProjectPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex items-center px-6 py-2 bg-gradient-to-r from-cyan-neon to-purple-neon text-white text-sm font-bold rounded-md hover:opacity-90 transition-opacity"
+                    className="flex items-center px-6 py-2 bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon text-white text-sm font-bold rounded-md hover:opacity-90 transition-opacity cursor-pointer"
                   >
                     {isSubmitting ? "Sending..." : "Submit Inquiry"} <Send className="w-4 h-4 ml-2" />
                   </button>

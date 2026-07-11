@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Camera, Mail, Send } from "lucide-react";
+import { Camera, Mail, Send, Phone } from "lucide-react";
 import Link from "next/link";
 
 export default function ContactPage() {
@@ -33,43 +33,59 @@ export default function ContactPage() {
     }
   };
 
-  const inputClasses = "w-full bg-black/50 border border-white/20 rounded-md px-4 py-3 text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
+  const inputClasses = "w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
 
   return (
-    <div className="min-h-screen py-24 bg-black">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen py-24 bg-background transition-colors duration-300 overflow-hidden">
+      {/* Abstract Background */}
+      <div className="absolute inset-0 z-0 opacity-40 dark:opacity-80 pointer-events-none">
+        <div className="absolute top-10 left-1/4 w-96 h-96 bg-cyan-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-neon/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact Me</h1>
-          <p className="text-xl text-gray-400">Have a question or just want to say hi? Let's talk.</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Get In Touch</h1>
+          <p className="text-xl text-slate-600 dark:text-gray-400">Have a project in mind or want to collaborate? Let's connect.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           
           {/* Contact Info */}
           <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
-            <p className="text-gray-400 mb-8 leading-relaxed">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Get in Touch</h2>
+            <p className="text-slate-600 dark:text-gray-400 mb-8 leading-relaxed">
               Whether you have a question about my services, want to discuss a potential project, or just want to connect, feel free to reach out. I'm always open to new opportunities and collaborations.
             </p>
             
             <div className="space-y-6">
-              <a href="mailto:stackcreater.dev@gmail.com" className="flex items-center text-gray-300 hover:text-cyan-neon transition-colors group">
-                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mr-4 group-hover:border-cyan-neon/50">
+              <a href="mailto:stackcreater.dev@gmail.com" className="flex items-center text-slate-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-neon transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mr-4 group-hover:border-cyan-600/50 dark:group-hover:border-cyan-neon/50">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500 font-medium">Email Me</div>
+                  <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">Email Me</div>
                   <div className="text-lg">stackcreater.dev@gmail.com</div>
                 </div>
               </a>
+
+              <a href="tel:+918270222541" className="flex items-center text-slate-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-neon transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mr-4 group-hover:border-cyan-600/50 dark:group-hover:border-cyan-neon/50">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">Call / WhatsApp</div>
+                  <div className="text-lg">+91 82702 22541</div>
+                </div>
+              </a>
               
-              <Link href="https://instagram.com/STACK_CREATER" target="_blank" rel="noreferrer" className="flex items-center text-gray-300 hover:text-purple-neon transition-colors group">
-                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mr-4 group-hover:border-purple-neon/50">
+              <Link href="https://instagram.com/STACK_CREATER" target="_blank" rel="noreferrer" className="flex items-center text-slate-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-neon transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center mr-4 group-hover:border-purple-600/50 dark:group-hover:border-purple-neon/50">
                   <Camera className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500 font-medium">Follow on Instagram</div>
+                  <div className="text-sm text-slate-500 dark:text-gray-500 font-medium">Follow on Instagram</div>
                   <div className="text-lg">@STACK_CREATER</div>
                 </div>
               </Link>
@@ -77,17 +93,17 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-8">
+          <div className="bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-sm dark:shadow-none">
             {isSuccess ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-12">
                 <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/50">
-                  <Send className="w-8 h-8 text-green-400" />
+                  <Send className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Message Sent!</h3>
-                <p className="text-gray-400">Thanks for reaching out. I'll get back to you shortly.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
+                <p className="text-slate-600 dark:text-gray-400">Thanks for reaching out. I'll get back to you shortly.</p>
                 <button 
                   onClick={() => setIsSuccess(false)}
-                  className="mt-6 text-cyan-neon hover:underline text-sm"
+                  className="mt-6 text-cyan-600 dark:text-cyan-neon hover:underline text-sm cursor-pointer"
                 >
                   Send another message
                 </button>
@@ -95,7 +111,7 @@ export default function ContactPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Name</label>
                   <input 
                     required 
                     type="text" 
@@ -106,7 +122,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Email</label>
                   <input 
                     required 
                     type="email" 
@@ -117,7 +133,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Message</label>
                   <textarea 
                     required 
                     rows={4} 
@@ -130,7 +146,7 @@ export default function ContactPage() {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full flex justify-center items-center py-3 px-4 rounded-md shadow-sm text-sm font-bold text-white bg-gradient-to-r from-cyan-neon to-purple-neon hover:opacity-90 focus:outline-none transition-all disabled:opacity-50"
+                  className="w-full flex justify-center items-center py-3 px-4 rounded-md shadow-sm text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon hover:opacity-90 focus:outline-none transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"} <Send className="w-4 h-4 ml-2" />
                 </button>
