@@ -366,18 +366,18 @@ export const GlobalSpotlight = ({
     document.body.appendChild(spotlight);
     spotlightRef.current = spotlight;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (clientX: number, clientY: number) => {
       if (!spotlightRef.current || !gridRef.current) return;
 
       const section = gridRef.current.closest('.bento-section') || gridRef.current;
       const rect = section.getBoundingClientRect();
-      const mouseInside =
-        e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      const inside =
+        clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
 
-      isInsideSection.current = mouseInside;
+      isInsideSection.current = inside;
       const cards = gridRef.current.querySelectorAll(cardSelector);
 
-      if (!mouseInside) {
+      if (!inside) {
         gsap.to(spotlightRef.current, {
           opacity: 0,
           duration: 0.3,
@@ -398,7 +398,7 @@ export const GlobalSpotlight = ({
         const centerX = cardRect.left + cardRect.width / 2;
         const centerY = cardRect.top + cardRect.height / 2;
         const distance =
-          Math.hypot(e.clientX - centerX, e.clientY - centerY) - Math.max(cardRect.width, cardRect.height) / 2;
+          Math.hypot(clientX - centerX, clientY - centerY) - Math.max(cardRect.width, cardRect.height) / 2;
         const effectiveDistance = Math.max(0, distance);
 
         minDistance = Math.min(minDistance, effectiveDistance);
@@ -410,12 +410,12 @@ export const GlobalSpotlight = ({
           glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
         }
 
-        updateCardGlowProperties(cardElement, e.clientX, e.clientY, glowIntensity, spotlightRadius);
+        updateCardGlowProperties(cardElement, clientX, clientY, glowIntensity, spotlightRadius);
       });
 
       gsap.to(spotlightRef.current, {
-        left: e.clientX,
-        top: e.clientY,
+        left: clientX,
+        top: clientY,
         duration: 0.1,
         ease: 'power2.out',
       });
@@ -434,7 +434,17 @@ export const GlobalSpotlight = ({
       });
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseMove = (e: MouseEvent) => {
+      handlePointerMove(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handlePointerLeave = () => {
       isInsideSection.current = false;
       gridRef.current?.querySelectorAll(cardSelector).forEach((card) => {
         (card as HTMLElement).style.setProperty('--glow-intensity', '0');
@@ -449,11 +459,17 @@ export const GlobalSpotlight = ({
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseleave', handlePointerLeave);
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchstart', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handlePointerLeave, { passive: true });
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseleave', handlePointerLeave);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchstart', handleTouchMove);
+      document.removeEventListener('touchend', handlePointerLeave);
       spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);
     };
   }, [gridRef, disableAnimations, enabled, spotlightRadius, glowColor, cardSelector]);
@@ -483,15 +499,13 @@ export const BentoSection = ({
   cardSelector = '.magic-bento-card',
 }: BentoSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMobileDetection();
-  const shouldDisable = disableAnimations || isMobile;
 
   return (
     <>
       {enableSpotlight && (
         <GlobalSpotlight
           gridRef={gridRef}
-          disableAnimations={shouldDisable}
+          disableAnimations={disableAnimations}
           enabled={enableSpotlight}
           spotlightRadius={spotlightRadius}
           glowColor={glowColor}

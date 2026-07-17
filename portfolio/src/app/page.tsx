@@ -80,7 +80,8 @@ export default function Home() {
             enableSpotlight={true}
             spotlightRadius={570}
             glowColor="132, 0, 255"
-            disableAnimations={isMobile}
+            cardSelector=".halo-card"
+            disableAnimations={false}
           >
             {services.map((service, index) => (
               <motion.div

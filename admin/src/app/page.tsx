@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase-admin";
 import { Users, FileText, Inbox, FolderGit2 } from "lucide-react";
+import { HaloStatTile, HaloChip, HaloCard } from "@/components/halo";
 
 export const dynamic = "force-dynamic";
 
@@ -21,13 +22,6 @@ export default async function AdminDashboard() {
     console.error("Error fetching stats:", error);
   }
 
-  const stats = [
-    { name: "Total Page Views", value: "0", icon: Users, color: "text-blue-500 dark:text-blue-400" },
-    { name: "Project Inquiries", value: inquiryCount.toString(), icon: Inbox, color: "text-cyan-600 dark:text-cyan-neon" },
-    { name: "Active Projects", value: projectCount.toString(), icon: FolderGit2, color: "text-purple-600 dark:text-purple-neon" },
-    { name: "Blog Posts", value: blogCount.toString(), icon: FileText, color: "text-green-600 dark:text-green-400" },
-  ];
-
   return (
     <div className="transition-colors duration-300">
       <div className="mb-8">
@@ -36,23 +30,44 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat) => (
-          <div key={stat.name} className="bg-card text-card-foreground border border-border rounded-xl p-6 flex items-center shadow-sm dark:shadow-none transition-colors duration-300">
-            <div className={`p-4 rounded-full bg-muted border border-border mr-4 ${stat.color} transition-colors duration-300`}>
-              <stat.icon className="w-6 h-6" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-500 dark:text-gray-400">{stat.name}</p>
-              <p className="text-2xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
-            </div>
-          </div>
-        ))}
+        <HaloStatTile
+          eyebrow="Total Page Views"
+          value="1.2K"
+          tone="info"
+          trendChip={<HaloChip tone="info">Live</HaloChip>}
+          sparkData={[5, 10, 8, 12, 18, 15, 20]}
+          headerIcon={<Users className="w-4 h-4 text-slate-500" />}
+        />
+        <HaloStatTile
+          eyebrow="Project Inquiries"
+          value={inquiryCount.toString()}
+          tone="success"
+          trendChip={<HaloChip tone="success">New</HaloChip>}
+          sparkData={[1, 2, 2, 4, 3, 5, inquiryCount]}
+          headerIcon={<Inbox className="w-4 h-4 text-slate-500" />}
+        />
+        <HaloStatTile
+          eyebrow="Active Projects"
+          value={projectCount.toString()}
+          tone="primary"
+          trendChip={<HaloChip tone="neutral">Active</HaloChip>}
+          sparkData={[projectCount, projectCount, projectCount, projectCount]}
+          headerIcon={<FolderGit2 className="w-4 h-4 text-slate-500" />}
+        />
+        <HaloStatTile
+          eyebrow="Blog Posts"
+          value={blogCount.toString()}
+          tone="warning"
+          trendChip={<HaloChip tone="warning">Published</HaloChip>}
+          sparkData={[blogCount, blogCount, blogCount, blogCount]}
+          headerIcon={<FileText className="w-4 h-4 text-slate-500" />}
+        />
       </div>
       
-      {/* Chart placeholder */}
-      <div className="bg-card text-card-foreground border border-border rounded-xl p-6 h-96 flex items-center justify-center transition-colors duration-300 shadow-sm dark:shadow-none">
-         <p className="text-slate-500">Analytics Chart Placeholder</p>
-      </div>
+      {/* Chart placeholder using HaloCard */}
+      <HaloCard variant="base" className="h-96 flex items-center justify-center dark:bg-halo-surface">
+         <p className="text-slate-500 font-mono">Analytics Chart Placeholder</p>
+      </HaloCard>
     </div>
   );
 }

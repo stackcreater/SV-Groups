@@ -56,7 +56,7 @@ export default function ContactPage() {
           enableSpotlight={true}
           spotlightRadius={570}
           glowColor="132, 0, 255"
-          disableAnimations={isMobile}
+          disableAnimations={false}
         >
           
           {/* Contact Info */}
