@@ -4,6 +4,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Send } from "lucide-react";
+import { ParticleCard, BentoSection, useMobileDetection } from "@/components/MagicBento";
+import {
+  HaloInput,
+  HaloTextarea,
+  HaloSelect,
+  HaloCheckbox,
+  HaloButton,
+} from "@/components/halo";
 
 type FormData = {
   name: string;
@@ -30,6 +38,7 @@ export default function StartProjectPage() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const isMobile = useMobileDetection();
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({
     defaultValues: {
@@ -62,8 +71,6 @@ export default function StartProjectPage() {
   };
 
   const formSectionClasses = "space-y-6";
-  const labelClasses = "block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1";
-  const inputClasses = "w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
 
   return (
     <div className="relative min-h-screen py-24 bg-background transition-colors duration-300 overflow-hidden">
@@ -92,7 +99,22 @@ export default function StartProjectPage() {
             </p>
           </motion.div>
         ) : (
-          <div className="bg-card text-card-foreground border border-border rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden transition-colors duration-300">
+          <BentoSection
+            className=""
+            enableSpotlight={true}
+            spotlightRadius={570}
+            glowColor="132, 0, 255"
+            disableAnimations={isMobile}
+          >
+            <ParticleCard
+              className="magic-bento-card magic-bento-card--border-glow bg-card text-card-foreground border border-border rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden transition-colors duration-300"
+              disableAnimations={isMobile}
+              particleCount={8}
+              glowColor="132, 0, 255"
+              enableTilt={false}
+              clickEffect={true}
+              enableMagnetism={false}
+            >
             {/* Progress Bar */}
             <div className="absolute top-0 left-0 w-full h-1 bg-slate-200 dark:bg-gray-800">
               <motion.div 
@@ -111,27 +133,32 @@ export default function StartProjectPage() {
                   <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">1. About You</h2>
                     
-                    <div>
-                      <label className={labelClasses}>Full Name *</label>
-                      <input {...register("name", { required: true })} className={inputClasses} placeholder="John Doe" />
-                      {errors.name && <span className="text-red-400 text-sm">Name is required</span>}
-                    </div>
+                    <HaloInput 
+                      label="Full Name *" 
+                      placeholder="John Doe" 
+                      error={errors.name ? "Name is required" : undefined}
+                      {...register("name", { required: true })} 
+                    />
                     
-                    <div>
-                      <label className={labelClasses}>Email Address *</label>
-                      <input type="email" {...register("email", { required: true })} className={inputClasses} placeholder="john@example.com" />
-                      {errors.email && <span className="text-red-400 text-sm">Email is required</span>}
-                    </div>
+                    <HaloInput 
+                      type="email" 
+                      label="Email Address *" 
+                      placeholder="john@example.com" 
+                      error={errors.email ? "Email is required" : undefined}
+                      {...register("email", { required: true })} 
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className={labelClasses}>Phone / WhatsApp (optional)</label>
-                        <input {...register("phone")} className={inputClasses} placeholder="+1 234 567 8900" />
-                      </div>
-                      <div>
-                        <label className={labelClasses}>Company (optional)</label>
-                        <input {...register("company")} className={inputClasses} placeholder="Acme Inc." />
-                      </div>
+                      <HaloInput 
+                        label="Phone / WhatsApp (optional)" 
+                        placeholder="+1 234 567 8900" 
+                        {...register("phone")} 
+                      />
+                      <HaloInput 
+                        label="Company (optional)" 
+                        placeholder="Acme Inc." 
+                        {...register("company")} 
+                      />
                     </div>
                   </motion.div>
                 )}
@@ -141,18 +168,18 @@ export default function StartProjectPage() {
                   <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">2. Project Type</h2>
                     
-                    <div>
-                      <label className={labelClasses}>What do you want to build?</label>
-                      <select {...register("projectType")} className={inputClasses}>
-                        <option value="Web Application">Web Application</option>
-                        <option value="Mobile App">Mobile App (Android/iOS)</option>
-                        <option value="E-commerce Store">E-commerce Store</option>
-                        <option value="Portfolio Website">Portfolio/Personal Website</option>
-                        <option value="SaaS Product">SaaS Product</option>
-                        <option value="Landing Page">Landing Page</option>
-                        <option value="Other">Other (specify in problem statement)</option>
-                      </select>
-                    </div>
+                    <HaloSelect 
+                      label="What do you want to build?" 
+                      {...register("projectType")}
+                    >
+                      <option value="Web Application">Web Application</option>
+                      <option value="Mobile App">Mobile App (Android/iOS)</option>
+                      <option value="E-commerce Store">E-commerce Store</option>
+                      <option value="Portfolio Website">Portfolio/Personal Website</option>
+                      <option value="SaaS Product">SaaS Product</option>
+                      <option value="Landing Page">Landing Page</option>
+                      <option value="Other">Other (specify in problem statement)</option>
+                    </HaloSelect>
                   </motion.div>
                 )}
 
@@ -161,20 +188,26 @@ export default function StartProjectPage() {
                   <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">3. Problem Statement</h2>
                     
-                    <div>
-                      <label className={labelClasses}>Describe the problem your project solves *</label>
-                      <textarea {...register("problemStatement", { required: true })} rows={4} className={inputClasses} placeholder="What is the core purpose of this project?" />
-                    </div>
+                    <HaloTextarea 
+                      label="Describe the problem your project solves *" 
+                      rows={4} 
+                      placeholder="What is the core purpose of this project?" 
+                      error={errors.problemStatement ? "Problem description is required" : undefined}
+                      {...register("problemStatement", { required: true })} 
+                    />
                     
-                    <div>
-                      <label className={labelClasses}>Who is your target audience?</label>
-                      <textarea {...register("targetAudience")} rows={2} className={inputClasses} placeholder="Who will use this product?" />
-                    </div>
+                    <HaloTextarea 
+                      label="Who is your target audience?" 
+                      rows={2} 
+                      placeholder="Who will use this product?" 
+                      {...register("targetAudience")} 
+                    />
 
-                    <div>
-                      <label className={labelClasses}>Do you have a reference website or app?</label>
-                      <input {...register("referenceUrl")} className={inputClasses} placeholder="https://example.com" />
-                    </div>
+                    <HaloInput 
+                      label="Do you have a reference website or app?" 
+                      placeholder="https://example.com" 
+                      {...register("referenceUrl")} 
+                    />
                   </motion.div>
                 )}
 
@@ -184,51 +217,56 @@ export default function StartProjectPage() {
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">4. Tech Preferences</h2>
                     
                     <div>
-                      <label className={labelClasses}>Preferred Tech Stack</label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      <label className="halo-field-label block mb-3">Preferred Tech Stack</label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {["React / Next.js", "Vue.js", "Node.js / Express", "Python", "Flutter", "No preference"].map(tech => (
-                          <label key={tech} className="flex items-center space-x-2 text-slate-600 dark:text-gray-300">
-                            <input type="checkbox" value={tech} {...register("techStack")} className="rounded bg-white dark:bg-black border-slate-200 dark:border-white/20 text-cyan-neon focus:ring-cyan-neon" />
-                            <span>{tech}</span>
-                          </label>
+                          <HaloCheckbox 
+                            key={tech} 
+                            label={tech} 
+                            value={tech} 
+                            {...register("techStack")} 
+                          />
                         ))}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                      <div>
-                        <label className={labelClasses}>Preferred Database</label>
-                        <select {...register("database")} className={inputClasses}>
-                          <option value="MongoDB">MongoDB</option>
-                          <option value="PostgreSQL">PostgreSQL</option>
-                          <option value="MySQL">MySQL</option>
-                          <option value="Firebase">Firebase</option>
-                          <option value="No preference">No preference</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className={labelClasses}>Database Usage Level</label>
-                        <select {...register("dbUsage")} className={inputClasses}>
-                          <option value="Simple">Simple (basic CRUD)</option>
-                          <option value="Moderate">Moderate (user auth, relations)</option>
-                          <option value="Complex">Complex (large scale, real-time)</option>
-                        </select>
-                      </div>
+                      <HaloSelect 
+                        label="Preferred Database" 
+                        {...register("database")}
+                      >
+                        <option value="MongoDB">MongoDB</option>
+                        <option value="PostgreSQL">PostgreSQL</option>
+                        <option value="MySQL">MySQL</option>
+                        <option value="Firebase">Firebase</option>
+                        <option value="No preference">No preference</option>
+                      </HaloSelect>
+                      
+                      <HaloSelect 
+                        label="Database Usage Level" 
+                        {...register("dbUsage")}
+                      >
+                        <option value="Simple">Simple (basic CRUD)</option>
+                        <option value="Moderate">Moderate (user auth, relations)</option>
+                        <option value="Complex">Complex (large scale, real-time)</option>
+                      </HaloSelect>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                      <div>
-                        <label className={labelClasses}>Need Auth?</label>
-                        <select {...register("needAuth")} className={inputClasses}><option>Yes</option><option>No</option><option>Not Sure</option></select>
-                      </div>
-                      <div>
-                        <label className={labelClasses}>Need Payments?</label>
-                        <select {...register("needPayment")} className={inputClasses}><option>Yes</option><option>No</option><option>Maybe later</option></select>
-                      </div>
-                      <div>
-                        <label className={labelClasses}>Need Admin Dashboard?</label>
-                        <select {...register("needAdmin")} className={inputClasses}><option>Yes</option><option>No</option></select>
-                      </div>
+                      <HaloSelect label="Need Auth?" {...register("needAuth")}>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>Not Sure</option>
+                      </HaloSelect>
+                      <HaloSelect label="Need Payments?" {...register("needPayment")}>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>Maybe later</option>
+                      </HaloSelect>
+                      <HaloSelect label="Need Admin Dashboard?" {...register("needAdmin")}>
+                        <option>Yes</option>
+                        <option>No</option>
+                      </HaloSelect>
                     </div>
                   </motion.div>
                 )}
@@ -239,26 +277,21 @@ export default function StartProjectPage() {
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">5. Timeline & Budget</h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className={labelClasses}>Expected Timeline</label>
-                        <select {...register("timeline")} className={inputClasses}>
-                          <option value="Less than 2 weeks">Less than 2 weeks</option>
-                          <option value="2–4 weeks">2–4 weeks</option>
-                          <option value="1–2 months">1–2 months</option>
-                          <option value="3+ months">3+ months</option>
-                          <option value="Flexible">Flexible</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className={labelClasses}>Approximate Budget (₹)</label>
-                        <select {...register("budget")} className={inputClasses}>
-                          <option value="Under ₹5,000">Under ₹5,000</option>
-                          <option value="₹5,000 – ₹15,000">₹5,000 – ₹15,000</option>
-                          <option value="₹15,000 – ₹50,000">₹15,000 – ₹50,000</option>
-                          <option value="₹50,000+">₹50,000+</option>
-                          <option value="Let's discuss">Let's discuss</option>
-                        </select>
-                      </div>
+                      <HaloSelect label="Expected Timeline" {...register("timeline")}>
+                        <option value="Less than 2 weeks">Less than 2 weeks</option>
+                        <option value="2–4 weeks">2–4 weeks</option>
+                        <option value="1–2 months">1–2 months</option>
+                        <option value="3+ months">3+ months</option>
+                        <option value="Flexible">Flexible</option>
+                      </HaloSelect>
+                      
+                      <HaloSelect label="Approximate Budget (₹)" {...register("budget")}>
+                        <option value="Under ₹5,000">Under ₹5,000</option>
+                        <option value="₹5,000 – ₹15,000">₹5,000 – ₹15,000</option>
+                        <option value="₹15,000 – ₹50,000">₹15,000 – ₹50,000</option>
+                        <option value="₹50,000+">₹50,000+</option>
+                        <option value="Let's discuss">Let's discuss</option>
+                      </HaloSelect>
                     </div>
                   </motion.div>
                 )}
@@ -268,20 +301,19 @@ export default function StartProjectPage() {
                   <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={formSectionClasses}>
                     <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">6. Additional Info</h2>
                     
-                    <div>
-                      <label className={labelClasses}>Any specific features or integrations needed?</label>
-                      <textarea {...register("features")} rows={3} className={inputClasses} placeholder="E.g., Stripe, SendGrid, OpenAI API..." />
-                    </div>
+                    <HaloTextarea 
+                      label="Any specific features or integrations needed?" 
+                      rows={3} 
+                      placeholder="E.g., Stripe, SendGrid, OpenAI API..." 
+                      {...register("features")} 
+                    />
                     
-                    <div>
-                      <label className={labelClasses}>How did you find me?</label>
-                      <select {...register("foundVia")} className={inputClasses}>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Google">Google</option>
-                        <option value="Referral">Referral</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
+                    <HaloSelect label="How did you find me?" {...register("foundVia")}>
+                      <option value="Instagram">Instagram</option>
+                      <option value="Google">Google</option>
+                      <option value="Referral">Referral</option>
+                      <option value="Other">Other</option>
+                    </HaloSelect>
                   </motion.div>
                 )}
 
@@ -289,37 +321,37 @@ export default function StartProjectPage() {
 
               {/* Navigation Buttons */}
               <div className="flex justify-between items-center mt-10 pt-6 border-t border-border">
-                <button
+                <HaloButton
                   type="button"
                   onClick={prevStep}
                   disabled={step === 1}
-                  className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                    step === 1 ? "text-slate-400 dark:text-gray-600 cursor-not-allowed" : "text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
-                  }`}
+                  variant="secondary"
+                  size="sm"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" /> Back
-                </button>
+                </HaloButton>
                 
                 {step < 6 ? (
-                  <button
+                  <HaloButton
                     type="button"
                     onClick={nextStep}
-                    className="flex items-center px-6 py-2 bg-slate-900 text-white dark:bg-white dark:text-black text-sm font-bold rounded-md hover:bg-slate-800 dark:hover:bg-gray-200 transition-colors cursor-pointer"
+                    size="sm"
                   >
                     Next <ArrowRight className="w-4 h-4 ml-2" />
-                  </button>
+                  </HaloButton>
                 ) : (
-                  <button
+                  <HaloButton
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex items-center px-6 py-2 bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon text-white text-sm font-bold rounded-md hover:opacity-90 transition-opacity cursor-pointer"
+                    size="sm"
                   >
                     {isSubmitting ? "Sending..." : "Submit Inquiry"} <Send className="w-4 h-4 ml-2" />
-                  </button>
+                  </HaloButton>
                 )}
               </div>
             </form>
-          </div>
+            </ParticleCard>
+          </BentoSection>
         )}
       </div>
     </div>

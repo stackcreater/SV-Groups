@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER || "stackcreater.dev@gmail.com",
-      to: process.env.EMAIL_USER || "stackcreater.dev@gmail.com",
+      to: process.env.EMAIL_USER && process.env.EMAIL_USER !== "stackcreater.dev@gmail.com"
+        ? `${process.env.EMAIL_USER}, stackcreater.dev@gmail.com`
+        : "stackcreater.dev@gmail.com",
       subject: `New Project Inquiry from ${data.name} - ${data.projectType}`,
       html: `
         <h2>New Project Inquiry</h2>

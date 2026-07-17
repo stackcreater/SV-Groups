@@ -1,0 +1,84 @@
+/* ── Chip Loader ─────────────────────────────────────── */
+
+.chip-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.chip-loader__svg-wrap {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Traces */
+.chip-loader .trace-bg {
+  stroke: #d0d0d0;
+  stroke-width: 1.8;
+  fill: none;
+}
+
+:root.dark .chip-loader .trace-bg {
+  stroke: #252525;
+}
+
+.chip-loader .trace-flow {
+  stroke-width: 1.8;
+  fill: none;
+  stroke-dasharray: 40 400;
+  stroke-dashoffset: 438;
+  filter: drop-shadow(0 0 6px currentColor);
+  animation: chip-flow 3s cubic-bezier(0.5, 0, 0.9, 1) infinite;
+}
+
+.chip-loader .trace-flow.blue,
+.chip-loader .trace-flow.blue2 {
+  stroke: #399fff;
+  color: #399fff;
+}
+
+@keyframes chip-flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Endpoint dots — need to be visible in both modes */
+.chip-loader .trace-dot {
+  fill: #b0b0b0;
+}
+
+:root.dark .chip-loader .trace-dot {
+  fill: #1a1a1a;
+}
+
+/* Chip body gradient override for light mode */
+.chip-loader .chip-body-light {
+  fill: #e8e8e8;
+  stroke: #c0c0c0;
+}
+
+:root.dark .chip-loader .chip-body-light {
+  fill: url(#chipGradient);
+  stroke: #222;
+}
+
+/* Chip text colors for light/dark */
+.chip-loader .chip-text-light {
+  fill: #555;
+}
+
+:root.dark .chip-loader .chip-text-light {
+  fill: url(#textGradient);
+}
+
+/* Pin colors for light mode */
+.chip-loader .pin-light {
+  fill: #aaa;
+}
+
+:root.dark .chip-loader .pin-light {
+  fill: url(#pinGradient);
+}

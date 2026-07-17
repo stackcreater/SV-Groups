@@ -1,0 +1,815 @@
+/* =============================================================
+   Halo — Dark Design System (adapted for Next.js + Tailwind)
+   Scoped under :root.dark so it only activates in dark mode.
+   ============================================================= */
+
+/* ---------- Design Tokens ---------- */
+:root.dark {
+  /* Surface tiers */
+  --halo-background: #0A0B0F;
+  --halo-surface: #14151C;
+  --halo-elevated: #1E2029;
+  --halo-overlay: rgba(10, 11, 15, 0.72);
+
+  /* Borders */
+  --halo-border: #2A2D38;
+  --halo-border-strong: #3A3D4A;
+  --halo-border-soft: rgba(255, 255, 255, 0.04);
+
+  /* Foreground */
+  --halo-text-primary: #F2F4F8;
+  --halo-text-secondary: #9AA0AE;
+  --halo-text-muted: #5C6170;
+  --halo-text-inverse: #0A0B0F;
+
+  /* Brand */
+  --halo-primary: #5B6BFF;
+  --halo-primary-hover: #7886FF;
+  --halo-primary-pressed: #4A59E6;
+  --halo-primary-soft: rgba(91, 107, 255, 0.12);
+
+  /* Signal */
+  --halo-success: #2BE08C;
+  --halo-warning: #F5D547;
+  --halo-info: #3DD7E5;
+  --halo-danger: #FF3A5C;
+  --halo-success-soft: rgba(43, 224, 140, 0.12);
+  --halo-warning-soft: rgba(245, 213, 71, 0.14);
+  --halo-info-soft: rgba(61, 215, 229, 0.14);
+  --halo-danger-soft: rgba(255, 58, 92, 0.14);
+
+  /* Typography */
+  --halo-font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --halo-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --halo-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radius */
+  --halo-radius-sm: 6px;
+  --halo-radius-md: 10px;
+  --halo-radius-lg: 16px;
+  --halo-radius-xl: 24px;
+  --halo-radius-full: 999px;
+
+  /* Elevation */
+  --halo-shadow-sm: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
+  --halo-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+  --halo-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+  /* Focus */
+  --halo-focus-ring: 0 0 0 3px rgba(91, 107, 255, 0.35);
+
+  /* Motion */
+  --halo-motion-fast: 120ms;
+  --halo-motion-base: 150ms;
+  --halo-motion-slow: 240ms;
+  --halo-easing: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* ---------- Light mode fallback tokens ---------- */
+:root {
+  --halo-background: #ffffff;
+  --halo-surface: #f8fafc;
+  --halo-elevated: #f1f5f9;
+  --halo-overlay: rgba(255, 255, 255, 0.72);
+
+  --halo-border: #e2e8f0;
+  --halo-border-strong: #cbd5e1;
+  --halo-border-soft: rgba(0, 0, 0, 0.04);
+
+  --halo-text-primary: #0f172a;
+  --halo-text-secondary: #64748b;
+  --halo-text-muted: #94a3b8;
+  --halo-text-inverse: #ffffff;
+
+  --halo-primary: #4f46e5;
+  --halo-primary-hover: #6366f1;
+  --halo-primary-pressed: #4338ca;
+  --halo-primary-soft: rgba(79, 70, 229, 0.1);
+
+  --halo-success: #10b981;
+  --halo-warning: #f59e0b;
+  --halo-info: #06b6d4;
+  --halo-danger: #ef4444;
+  --halo-success-soft: rgba(16, 185, 129, 0.1);
+  --halo-warning-soft: rgba(245, 158, 11, 0.1);
+  --halo-info-soft: rgba(6, 182, 212, 0.1);
+  --halo-danger-soft: rgba(239, 68, 68, 0.1);
+
+  --halo-font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --halo-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --halo-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --halo-radius-sm: 6px;
+  --halo-radius-md: 10px;
+  --halo-radius-lg: 16px;
+  --halo-radius-xl: 24px;
+  --halo-radius-full: 999px;
+
+  --halo-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --halo-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --halo-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.12);
+
+  --halo-focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.25);
+
+  --halo-motion-fast: 120ms;
+  --halo-motion-base: 150ms;
+  --halo-motion-slow: 240ms;
+  --halo-easing: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* =============================================================
+   Buttons
+   ============================================================= */
+
+.halo-btn {
+  --_h: 40px;
+  --_px: 18px;
+  --_r: var(--halo-radius-md);
+  --_fs: 0.875rem;
+  --_fw: 500;
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--_h);
+  padding-inline: var(--_px);
+  border-radius: var(--_r);
+  border: 1px solid transparent;
+  font-family: var(--halo-font-display);
+  font-size: var(--_fs);
+  font-weight: var(--_fw);
+  letter-spacing: -0.005em;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  background: transparent;
+  color: var(--halo-text-primary);
+  transition:
+    background-color var(--halo-motion-base) var(--halo-easing),
+    border-color var(--halo-motion-base) var(--halo-easing),
+    color var(--halo-motion-base) var(--halo-easing),
+    box-shadow var(--halo-motion-base) var(--halo-easing),
+    transform var(--halo-motion-fast) var(--halo-easing);
+}
+
+.halo-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--halo-focus-ring);
+}
+
+.halo-btn:disabled,
+.halo-btn[aria-disabled="true"] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.halo-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+
+/* Primary */
+.halo-btn-primary {
+  background-color: var(--halo-primary);
+  color: #FFFFFF;
+  border-color: var(--halo-primary);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.halo-btn-primary:hover { background-color: var(--halo-primary-hover); border-color: var(--halo-primary-hover); }
+.halo-btn-primary:active { background-color: var(--halo-primary-pressed); border-color: var(--halo-primary-pressed); transform: translateY(1px); }
+
+/* Secondary */
+.halo-btn-secondary {
+  background-color: var(--halo-surface);
+  color: var(--halo-text-primary);
+  border-color: var(--halo-border-strong);
+}
+.halo-btn-secondary:hover { background-color: var(--halo-elevated); }
+.halo-btn-secondary:active { transform: translateY(1px); }
+
+/* Tertiary */
+.halo-btn-tertiary {
+  background-color: transparent;
+  color: var(--halo-text-secondary);
+}
+.halo-btn-tertiary:hover { background-color: var(--halo-surface); color: var(--halo-text-primary); }
+
+/* Danger */
+.halo-btn-danger {
+  background-color: var(--halo-danger);
+  color: #FFFFFF;
+  border-color: var(--halo-danger);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.halo-btn-danger:hover { filter: brightness(1.06); }
+
+/* Sizes */
+.halo-btn-sm { --_h: 32px; --_px: 12px; --_fs: 0.8125rem; --_r: 8px; }
+.halo-btn-sm svg { width: 14px; height: 14px; }
+.halo-btn-lg { --_h: 48px; --_px: 22px; --_fs: 0.9375rem; }
+.halo-btn-lg svg { width: 18px; height: 18px; }
+.halo-btn-icon { padding-inline: 0; width: var(--_h); aspect-ratio: 1; }
+
+/* =============================================================
+   Inputs & Form Fields
+   ============================================================= */
+
+.halo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.halo-field-label {
+  font-family: var(--halo-font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--halo-text-secondary);
+}
+
+.halo-field-help {
+  font-family: var(--halo-font-body);
+  font-size: 0.8125rem;
+  color: var(--halo-text-muted);
+}
+
+.halo-field-help.is-error {
+  color: var(--halo-danger);
+}
+
+.halo-input,
+.halo-textarea,
+.halo-select {
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  background-color: var(--halo-surface);
+  color: var(--halo-text-primary);
+  border: 1px solid var(--halo-border);
+  border-radius: var(--halo-radius-md);
+  padding-inline: 14px;
+  font-family: var(--halo-font-body);
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  transition:
+    border-color var(--halo-motion-base) var(--halo-easing),
+    background-color var(--halo-motion-base) var(--halo-easing),
+    box-shadow var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-input::placeholder,
+.halo-textarea::placeholder {
+  color: var(--halo-text-muted);
+}
+
+.halo-input:hover,
+.halo-textarea:hover,
+.halo-select:hover {
+  border-color: var(--halo-border-strong);
+}
+
+.halo-input:focus,
+.halo-textarea:focus,
+.halo-select:focus {
+  outline: none;
+  border-color: var(--halo-primary);
+  box-shadow: var(--halo-focus-ring);
+}
+
+.halo-input:disabled,
+.halo-textarea:disabled,
+.halo-select:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.halo-input.is-invalid,
+.halo-textarea.is-invalid,
+.halo-select.is-invalid {
+  border-color: var(--halo-danger);
+  box-shadow: 0 0 0 3px var(--halo-danger-soft);
+}
+
+.halo-textarea {
+  height: auto;
+  padding: 12px 14px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 96px;
+}
+
+.halo-select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--halo-text-secondary) 50%),
+    linear-gradient(135deg, var(--halo-text-secondary) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+.halo-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.halo-input-group .halo-input {
+  padding-left: 38px;
+}
+
+.halo-input-icon {
+  position: absolute;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--halo-text-muted);
+  pointer-events: none;
+}
+
+.halo-input-icon > svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* =============================================================
+   Cards
+   ============================================================= */
+
+.halo-card {
+  background-color: var(--halo-surface);
+  border: 1px solid var(--halo-border);
+  border-radius: var(--halo-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  transition:
+    border-color var(--halo-motion-base) var(--halo-easing),
+    background-color var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-card:hover {
+  border-color: var(--halo-border-strong);
+}
+
+.halo-card-elevated {
+  background-color: var(--halo-elevated);
+  border-color: var(--halo-border-strong);
+  box-shadow: var(--halo-shadow-md);
+}
+
+.halo-card-accent::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background-color: var(--halo-primary);
+  border-radius: var(--halo-radius-lg) var(--halo-radius-lg) 0 0;
+}
+
+.halo-card-accent[data-accent="success"]::before { background-color: var(--halo-success); }
+.halo-card-accent[data-accent="warning"]::before { background-color: var(--halo-warning); }
+.halo-card-accent[data-accent="info"]::before { background-color: var(--halo-info); }
+.halo-card-accent[data-accent="danger"]::before { background-color: var(--halo-danger); }
+
+.halo-card-eyebrow {
+  font-family: var(--halo-font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--halo-text-secondary);
+}
+
+.halo-card-title {
+  font-family: var(--halo-font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--halo-text-primary);
+  margin: 0;
+}
+
+.halo-card-body {
+  font-family: var(--halo-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--halo-text-secondary);
+  margin: 0;
+}
+
+.halo-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 8px;
+  margin-top: auto;
+}
+
+.halo-card-media {
+  margin: -24px -24px 0;
+  height: 160px;
+  border-bottom: 1px solid var(--halo-border);
+  border-radius: var(--halo-radius-lg) var(--halo-radius-lg) 0 0;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(91, 107, 255, 0.35), transparent 55%),
+    radial-gradient(circle at 75% 70%, rgba(61, 215, 229, 0.22), transparent 55%),
+    linear-gradient(135deg, var(--halo-surface) 0%, var(--halo-elevated) 100%);
+  overflow: hidden;
+}
+
+/* =============================================================
+   Checkbox & Radio
+   ============================================================= */
+
+.halo-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: var(--halo-text-primary);
+  font-size: 0.9375rem;
+  font-family: var(--halo-font-body);
+}
+
+.halo-check input[type="checkbox"],
+.halo-check input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: var(--halo-surface);
+  border: 1px solid var(--halo-border-strong);
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  transition:
+    background-color var(--halo-motion-base) var(--halo-easing),
+    border-color var(--halo-motion-base) var(--halo-easing),
+    box-shadow var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-check input[type="radio"] {
+  border-radius: var(--halo-radius-full);
+}
+
+.halo-check input[type="checkbox"]:hover,
+.halo-check input[type="radio"]:hover {
+  border-color: var(--halo-primary-hover);
+}
+
+.halo-check input[type="checkbox"]:focus-visible,
+.halo-check input[type="radio"]:focus-visible {
+  outline: none;
+  box-shadow: var(--halo-focus-ring);
+}
+
+.halo-check input[type="checkbox"]:checked,
+.halo-check input[type="radio"]:checked {
+  background-color: var(--halo-primary);
+  border-color: var(--halo-primary);
+}
+
+.halo-check input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+}
+
+.halo-check input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background-color: #FFFFFF;
+  border-radius: var(--halo-radius-full);
+}
+
+.halo-check input:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* =============================================================
+   Switch (pill toggle)
+   ============================================================= */
+
+.halo-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.halo-switch input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.halo-switch-track {
+  position: absolute;
+  inset: 0;
+  background-color: var(--halo-elevated);
+  border: 1px solid var(--halo-border-strong);
+  border-radius: var(--halo-radius-full);
+  transition:
+    background-color var(--halo-motion-base) var(--halo-easing),
+    border-color var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--halo-text-secondary);
+  border-radius: var(--halo-radius-full);
+  transition:
+    transform var(--halo-motion-base) var(--halo-easing),
+    background-color var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-switch input:checked ~ .halo-switch-track {
+  background-color: var(--halo-primary);
+  border-color: var(--halo-primary);
+}
+
+.halo-switch input:checked ~ .halo-switch-thumb {
+  transform: translateX(16px);
+  background-color: #FFFFFF;
+}
+
+.halo-switch input:focus-visible ~ .halo-switch-track {
+  box-shadow: var(--halo-focus-ring);
+}
+
+/* =============================================================
+   Tabs (pill segmented control)
+   ============================================================= */
+
+.halo-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--halo-surface);
+  border: 1px solid var(--halo-border);
+  border-radius: var(--halo-radius-full);
+}
+
+.halo-tab {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--halo-radius-full);
+  color: var(--halo-text-secondary);
+  font-family: var(--halo-font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  height: 32px;
+  padding-inline: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition:
+    background-color var(--halo-motion-base) var(--halo-easing),
+    color var(--halo-motion-base) var(--halo-easing),
+    border-color var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-tab:hover {
+  background-color: var(--halo-elevated);
+  color: var(--halo-text-primary);
+}
+
+.halo-tab[aria-selected="true"],
+.halo-tab.is-active {
+  background-color: var(--halo-elevated);
+  color: var(--halo-text-primary);
+  border-color: var(--halo-primary);
+}
+
+.halo-tab:focus-visible {
+  outline: none;
+  box-shadow: var(--halo-focus-ring);
+}
+
+.halo-tab svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+
+/* =============================================================
+   Chips & Badges
+   ============================================================= */
+
+.halo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding-inline: 10px;
+  border-radius: var(--halo-radius-full);
+  background-color: var(--halo-primary-soft);
+  color: var(--halo-primary-hover);
+  font-family: var(--halo-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.halo-chip[data-tone="success"] { background-color: var(--halo-success-soft); color: var(--halo-success); }
+.halo-chip[data-tone="warning"] { background-color: var(--halo-warning-soft); color: var(--halo-warning); }
+.halo-chip[data-tone="info"] { background-color: var(--halo-info-soft); color: var(--halo-info); }
+.halo-chip[data-tone="danger"] { background-color: var(--halo-danger-soft); color: var(--halo-danger); }
+.halo-chip[data-tone="neutral"] { background-color: var(--halo-elevated); color: var(--halo-text-secondary); border-color: var(--halo-border); }
+
+.halo-chip svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+
+.halo-badge-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--halo-radius-full);
+  background-color: var(--halo-primary);
+}
+
+.halo-badge-dot[data-tone="success"] { background-color: var(--halo-success); }
+.halo-badge-dot[data-tone="warning"] { background-color: var(--halo-warning); }
+.halo-badge-dot[data-tone="info"] { background-color: var(--halo-info); }
+.halo-badge-dot[data-tone="danger"] { background-color: var(--halo-danger); }
+
+/* =============================================================
+   Stat Tile
+   ============================================================= */
+
+.halo-stat-tile {
+  position: relative;
+  background-color: var(--halo-surface);
+  border: 1px solid var(--halo-border);
+  border-radius: var(--halo-radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  transition:
+    border-color var(--halo-motion-base) var(--halo-easing),
+    transform var(--halo-motion-base) var(--halo-easing);
+}
+
+.halo-stat-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background-color: var(--halo-primary);
+  opacity: 0.9;
+}
+
+.halo-stat-tile[data-tone="success"]::before { background-color: var(--halo-success); }
+.halo-stat-tile[data-tone="warning"]::before { background-color: var(--halo-warning); }
+.halo-stat-tile[data-tone="info"]::before { background-color: var(--halo-info); }
+.halo-stat-tile[data-tone="danger"]::before { background-color: var(--halo-danger); }
+
+.halo-stat-tile:hover {
+  border-color: var(--halo-border-strong);
+}
+
+.halo-stat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.halo-stat-eyebrow {
+  font-family: var(--halo-font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--halo-text-secondary);
+}
+
+.halo-stat-value {
+  font-family: var(--halo-font-mono);
+  font-weight: 600;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--halo-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.halo-stat-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.halo-stat-foot {
+  font-family: var(--halo-font-body);
+  font-size: 0.8125rem;
+  color: var(--halo-text-muted);
+}
+
+.halo-stat-spark {
+  width: 96px;
+  height: 32px;
+  color: var(--halo-primary);
+}
+
+.halo-stat-tile[data-tone="success"] .halo-stat-spark { color: var(--halo-success); }
+.halo-stat-tile[data-tone="warning"] .halo-stat-spark { color: var(--halo-warning); }
+.halo-stat-tile[data-tone="info"] .halo-stat-spark { color: var(--halo-info); }
+.halo-stat-tile[data-tone="danger"] .halo-stat-spark { color: var(--halo-danger); }
+
+/* Sizes */
+.halo-stat-sm { padding: 16px; gap: 12px; }
+.halo-stat-sm .halo-stat-value { font-size: 1.75rem; }
+.halo-stat-sm .halo-stat-spark { width: 72px; height: 24px; }
+
+.halo-stat-lg { padding: 24px; gap: 20px; }
+.halo-stat-lg .halo-stat-value { font-size: 2.75rem; }
+.halo-stat-lg .halo-stat-spark { width: 120px; height: 40px; }
+
+/* =============================================================
+   Eyebrow
+   ============================================================= */
+
+.halo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--halo-text-secondary);
+  font-family: var(--halo-font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.halo-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--halo-radius-full);
+  background-color: var(--halo-primary);
+  box-shadow: 0 0 0 4px var(--halo-primary-soft);
+}
+
+/* =============================================================
+   Accessibility
+   ============================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .halo-btn,
+  .halo-input,
+  .halo-textarea,
+  .halo-select,
+  .halo-card,
+  .halo-tab,
+  .halo-switch-track,
+  .halo-switch-thumb,
+  .halo-stat-tile,
+  .halo-check input {
+    transition-duration: 0.001ms !important;
+  }
+}

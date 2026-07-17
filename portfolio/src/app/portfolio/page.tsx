@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase-admin";
 import { FolderGit2 } from "lucide-react";
-import Image from "next/image";
+import { PortfolioGrid, PortfolioCard } from "@/components/MagicBentoWrappers";
 
 export const dynamic = "force-dynamic";
 
@@ -34,9 +34,9 @@ export default async function PortfolioPage() {
           <p className="text-xl text-slate-600 dark:text-gray-400">Some of my recent work and case studies.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <PortfolioGrid>
           {projects.map((project) => (
-            <div key={project.id} className="bg-card text-card-foreground border border-border rounded-2xl overflow-hidden hover:border-cyan-neon/50 transition-colors shadow-sm dark:shadow-none group flex flex-col">
+            <PortfolioCard key={project.id}>
               <div className="relative h-48 w-full bg-muted flex items-center justify-center overflow-hidden">
                 {project.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -63,9 +63,9 @@ export default async function PortfolioPage() {
                   ))}
                 </div>
               </div>
-            </div>
+            </PortfolioCard>
           ))}
-        </div>
+        </PortfolioGrid>
         
       </div>
     </div>

@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { Camera, Mail, Send, Phone } from "lucide-react";
 import Link from "next/link";
+import { ParticleCard, BentoSection, useMobileDetection } from "@/components/MagicBento";
+import { HaloInput, HaloTextarea, HaloButton } from "@/components/halo";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const isMobile = useMobileDetection();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +36,6 @@ export default function ContactPage() {
     }
   };
 
-  const inputClasses = "w-full bg-white dark:bg-black/50 border border-slate-200 dark:border-white/20 rounded-md px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors";
-
   return (
     <div className="relative min-h-screen py-24 bg-background transition-colors duration-300 overflow-hidden">
       {/* Abstract Background */}
@@ -50,10 +51,24 @@ export default function ContactPage() {
           <p className="text-xl text-slate-600 dark:text-gray-400">Have a project in mind or want to collaborate? Let's connect.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <BentoSection
+          className="grid grid-cols-1 md:grid-cols-2 gap-12"
+          enableSpotlight={true}
+          spotlightRadius={570}
+          glowColor="132, 0, 255"
+          disableAnimations={isMobile}
+        >
           
           {/* Contact Info */}
-          <div>
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow rounded-2xl p-8 bg-white/50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10"
+            disableAnimations={isMobile}
+            particleCount={8}
+            glowColor="132, 0, 255"
+            enableTilt={false}
+            clickEffect={true}
+            enableMagnetism={false}
+          >
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Get in Touch</h2>
             <p className="text-slate-600 dark:text-gray-400 mb-8 leading-relaxed">
               Whether you have a question about my services, want to discuss a potential project, or just want to connect, feel free to reach out. I'm always open to new opportunities and collaborations.
@@ -90,10 +105,18 @@ export default function ContactPage() {
                 </div>
               </Link>
             </div>
-          </div>
+          </ParticleCard>
 
           {/* Contact Form */}
-          <div className="bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-sm dark:shadow-none">
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-sm dark:shadow-none"
+            disableAnimations={isMobile}
+            particleCount={8}
+            glowColor="132, 0, 255"
+            enableTilt={false}
+            clickEffect={true}
+            enableMagnetism={false}
+          >
             {isSuccess ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-12">
                 <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/50">
@@ -110,51 +133,41 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Name</label>
-                  <input 
-                    required 
-                    type="text" 
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className={inputClasses} 
-                    placeholder="Your Name" 
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Email</label>
-                  <input 
-                    required 
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className={inputClasses} 
-                    placeholder="you@example.com" 
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-gray-300 mb-1">Message</label>
-                  <textarea 
-                    required 
-                    rows={4} 
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className={inputClasses} 
-                    placeholder="How can I help you?" 
-                  />
-                </div>
-                <button 
+                <HaloInput 
+                  required 
+                  type="text" 
+                  label="Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="Your Name" 
+                />
+                <HaloInput 
+                  required 
+                  type="email" 
+                  label="Email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  placeholder="you@example.com" 
+                />
+                <HaloTextarea 
+                  required 
+                  label="Message"
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  placeholder="How can I help you?" 
+                />
+                <HaloButton 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full flex justify-center items-center py-3 px-4 rounded-md shadow-sm text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-neon dark:to-purple-neon hover:opacity-90 focus:outline-none transition-all disabled:opacity-50 cursor-pointer"
+                  className="w-full flex justify-center items-center cursor-pointer"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"} <Send className="w-4 h-4 ml-2" />
-                </button>
+                </HaloButton>
               </form>
             )}
-          </div>
+          </ParticleCard>
 
-        </div>
+        </BentoSection>
       </div>
     </div>
   );

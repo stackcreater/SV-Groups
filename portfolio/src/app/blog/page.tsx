@@ -1,6 +1,7 @@
 import { db } from "@/lib/firebase-admin";
 import Link from "next/link";
 import { FileText, Calendar } from "lucide-react";
+import { BlogGrid, BlogCard } from "@/components/MagicBentoWrappers";
 
 export const dynamic = "force-dynamic";
 
@@ -40,10 +41,10 @@ export default async function BlogPage() {
           <p className="text-xl text-slate-600 dark:text-gray-400">Thoughts, tutorials, and insights on web & mobile development.</p>
         </div>
 
-        <div className="space-y-10">
+        <BlogGrid>
           {posts.map((post) => (
             <Link href={`/blog/${post.slug || post.id}`} key={post.id} className="block group">
-              <div className="bg-card text-card-foreground border border-border rounded-2xl overflow-hidden hover:bg-slate-50 dark:hover:bg-white/[0.04] shadow-sm dark:shadow-none transition-colors flex flex-col md:flex-row">
+              <BlogCard>
                 
                 <div className="md:w-1/3 relative h-64 md:h-auto bg-muted flex items-center justify-center overflow-hidden">
                   {post.imageUrl ? (
@@ -71,10 +72,10 @@ export default async function BlogPage() {
                   </div>
                 </div>
 
-              </div>
+              </BlogCard>
             </Link>
           ))}
-        </div>
+        </BlogGrid>
         
       </div>
     </div>
